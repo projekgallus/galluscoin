@@ -205,7 +205,7 @@ application.
 
 * Clone source code, change to the root of the source code directory and build:
 
-        git clone https://github.com/gallusprojects/galluscoin; cd galluscoin; make release-static;
+        git clone https://github.com/projekgallus/galluscoin; cd galluscoin; make release-static;
 
 
 ### On OpenBSD:
