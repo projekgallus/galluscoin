@@ -3,7 +3,7 @@
 ## Development Resources
 
 - Web: [www.galluscoin.com](https://www.galluscoin.com)
-- Mail: [contact@galluscoin.com](mailto:contact@galluscoin.com)
+- Github: [https://github.com/projekgallus/galluscoin](https://github.com/projekgallus/galluscoin)
 
 
 ## About this Project
