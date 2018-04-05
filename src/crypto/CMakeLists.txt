@@ -68,13 +68,13 @@ set(crypto_private_headers
   skein.h
   skein_port.h)
 
-galluscoin_private_headers(crypto
+galluscoin_private_headers(cncrypto
   ${crypto_private_headers})
-galluscoin_add_library(crypto
+galluscoin_add_library(cncrypto
   ${crypto_sources}
   ${crypto_headers}
   ${crypto_private_headers})
-target_link_libraries(crypto
+target_link_libraries(cncrypto
   PUBLIC
     ${Boost_SYSTEM_LIBRARY}
   PRIVATE
