@@ -107,7 +107,7 @@ if (NOT BUILD_GUI_DEPS)
       wallet
       rpc
       cryptonote_core
-      cncrypto
+      crypto
       common
       ${Boost_CHRONO_LIBRARY}
       ${Boost_PROGRAM_OPTIONS_LIBRARY}

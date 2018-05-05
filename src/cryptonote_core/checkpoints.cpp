@@ -1,5 +1,5 @@
 // Copyright (c) 2018, Projek Gallus
-// Copyright (c) 2016-2017, SUMOKOIN, (forked from) The Monero Project
+// Copyright (c) 2017, SUMOKOIN
 // Copyright (c) 2014-2016, The Monero Project
 //
 // All rights reserved.
@@ -160,13 +160,10 @@ namespace cryptonote
 
   bool checkpoints::init_default_checkpoints()
   {
-    ADD_CHECKPOINT(1,     "3722872042e0ea50b9806b273667ffb7f3e4f3ecce7d760fd4c41155e638aa86");
-    ADD_CHECKPOINT(10,    "85adb8d02fa5b32cc1df69113609937a115d84e920899493d94d9a2dcab0eda0");
-	ADD_CHECKPOINT(100,   "a53375d8d2db85868ed90d172afbd6a7e4604820021f6e0f8b35d3b2baf02899");
-	ADD_CHECKPOINT(300,   "50b366fba611e43234a5ad1d38a2ed9c57bca6114f8abf7d00a1784b19ebf40f");	
-	ADD_CHECKPOINT(1000,   "a5b9fb8c35e76d8b004641129ef3d68bbe3d6efeb577024ecd2b4cd605b2429a");	
-	ADD_CHECKPOINT(2000,   "a9483ab289f019ca87ae97e2c6abace129387149df20e87e6cd9398e54c4fc14");	
-	ADD_CHECKPOINT(2478,   "b39bdbb6af911d549717fac3158d6c5a36b4c264cab733ac92edc426bae8956e");	
+    ADD_CHECKPOINT(1,     "589d2fab3987a7942e97a479a32aaf9de473e5ddb961e9bb99ef0dd429da22f7");
+    ADD_CHECKPOINT(10,    "fcc9fc9292567bd1bc684beaf73047313f2a448b77faeaf87300463db4e7d846"); 
+    ADD_CHECKPOINT(100,   "1f9713a3126f37c856c3efcd4c47194e9d7f0b09a8cde0abe7a72fcf663d99e5"); //version 3
+    ADD_CHECKPOINT(200,   "1d5d0838548e0fd8e17a8fb78b186986866f8ea8c3b21a8cdc7023da96ac9fc2");
     return true;
   }
 
@@ -207,17 +204,14 @@ namespace cryptonote
     // All GallusPulse domains have DNSSEC on and valid
     static const std::vector<std::string> dns_urls = 
     {
-	"checkpoints.galluspulse.cloud"
-	, "checkpoints.galluspulse.win"
+	  "checkpoints.galluspulse.win"
 	, "checkpoints.galluspulse.bid"
-	, "checkpoints.galluspulse.win"
     };
 
-    static const std::vector<std::string> testnet_dns_urls = { 
-	"testpoints.galluspulse.cloud"
-		, "testpoints.galluspulse.win"
-		, "testpoints.galluspulse.bid"
-		, "testpoints.galluspulse1.win"
+    static const std::vector<std::string> testnet_dns_urls = 
+	{ 
+	  "testpoints.galluspulse.win"
+	, "testpoints.galluspulse.bid"
     };
 
     std::vector<std::vector<std::string> > records;

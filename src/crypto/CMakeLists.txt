@@ -27,25 +27,21 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 set(crypto_sources
-  aesb.c
   blake256.c
   chacha8.c
   crypto-ops-data.c
   crypto-ops.c
   crypto.cpp
   groestl.c
-  hash-extra-blake.c
-  hash-extra-groestl.c
-  hash-extra-jh.c
-  hash-extra-skein.c
   hash.c
   jh.c
   keccak.c
-  oaes_lib.c
   random.c
   skein.c
-  slow-hash.c
-  tree-hash.c)
+  tree-hash.c
+  cn_slow_hash_soft.cpp
+  cn_slow_hash_hard_intel.cpp
+  cn_slow_hash_hard_arm.cpp)
 
 set(crypto_headers)
 
@@ -62,40 +58,19 @@ set(crypto_private_headers
   initializer.h
   jh.h
   keccak.h
-  oaes_config.h
-  oaes_lib.h
   random.h
   skein.h
-  skein_port.h)
+  skein_port.h
+  cn_slow_hash.hpp)
 
-galluscoin_private_headers(cncrypto
+galluscoin_private_headers(crypto
   ${crypto_private_headers})
-galluscoin_add_library(cncrypto
+galluscoin_add_library(crypto
   ${crypto_sources}
   ${crypto_headers}
   ${crypto_private_headers})
-target_link_libraries(cncrypto
+target_link_libraries(crypto
   PUBLIC
     ${Boost_SYSTEM_LIBRARY}
   PRIVATE
     ${EXTRA_LIBRARIES})
-
-if (ARM)
-  option(NO_OPTIMIZED_MULTIPLY_ON_ARM
-	   "Compute multiply using generic C implementation instead of ARM ASM" OFF)
-  if(NO_OPTIMIZED_MULTIPLY_ON_ARM)
-    message(STATUS "Using generic C implementation for multiply")
-    set_property(SOURCE slow-hash.c
-      PROPERTY COMPILE_DEFINITIONS "NO_OPTIMIZED_MULTIPLY_ON_ARM")
-  endif()
-endif()
-
-# Because of the way Qt works on android with JNI, the code does not live in the
-# main android thread
-# So this code runs with a 1 MB default stack size.
-# This will force the use of the heap for the allocation of the scratchpad
-if (ANDROID OR IOS)
-  if( BUILD_GUI_DEPS )
-    add_definitions(-DFORCE_USE_HEAP=1)
-  endif()
-endif()

@@ -1,5 +1,5 @@
 // Copyright (c) 2018, Projek Gallus
-// Copyright (c) 2016-2017, SUMOKOIN, (forked from) The Monero Project
+// Copyright (c) 2017, SUMOKOIN
 // Copyright (c) 2014-2017, The Monero Project
 // 
 // All rights reserved.
@@ -45,8 +45,7 @@
 #define CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW            60
 #define CURRENT_TRANSACTION_VERSION                     2
 #define MIN_TRANSACTION_VERSION							            2
-#define CURRENT_BLOCK_MAJOR_VERSION                     1
-#define CURRENT_BLOCK_MINOR_VERSION                     1
+#define CRYPTONOTE_V2_POW_BLOCK_VERSION                 3
 #define CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT              60*60*2
 #define CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE             10
 #define BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW               60
@@ -97,7 +96,7 @@
 #define CRYPTONOTE_MEMPOOL_TX_LIVETIME                  86400 //seconds, one day
 #define CRYPTONOTE_MEMPOOL_TX_FROM_ALT_BLOCK_LIVETIME   604800 //seconds, one week
 
-#define COMMAND_RPC_GET_BLOCKS_FAST_MAX_COUNT           1000
+#define COMMAND_RPC_GET_BLOCKS_FAST_MAX_COUNT           250
 
 #define P2P_LOCAL_WHITE_PEERLIST_LIMIT                  1000
 #define P2P_LOCAL_GRAY_PEERLIST_LIMIT                   5000
@@ -153,29 +152,29 @@ namespace config
   std::string const P2P_REMOTE_DEBUG_TRUSTED_PUB_KEY = "0000000000000000000000000000000000000000000000000000000000000000";
 
   uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0xb50ec;  // gac
-  uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x6b6c; //gcc
+  uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x6cec; //gci
   uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x706c; // gc
   uint16_t const P2P_DEFAULT_PORT = 22022;
   uint16_t const RPC_DEFAULT_PORT = 22023;
 
   boost::uuids::uuid const NETWORK_ID = { {
-		  0x00, 0x23, 0x54, 0x5B, 0x7B, 0x46, 0x22, 0x02, 0x22, 0x20, 0x02, 0x22, 0x22, 0x02, 0x02, 0x22
+		  0x25, 0x23, 0x54, 0x5B, 0x7B, 0x46, 0x22, 0x02, 0x22, 0x20, 0x02, 0x22, 0x22, 0x02, 0x02, 0x22
     } }; // Bender's nightmare
-  std::string const GENESIS_TX = "023c01ff0001808095f52a029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd088071210131b20e8887b0685fa69c64eed5cf873a8cfd950b8b6b1031f62b6e5a077920eb00";
-  uint32_t const GENESIS_NONCE = 7000;
+  std::string const GENESIS_TX = "023c01ff0001808095f52a029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd088071210188d38220b832e5d9959c67326a705398543777707ede7a488221c15d6d45b61e00";
+  uint32_t const GENESIS_NONCE = 1000;
 
   namespace testnet
   {
-    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x4bee; // guc
-    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x358b6e; // gucc
-    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x9754b6e; // guccc
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x36ee; // gt
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x32ed; // gi
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x296e; // gs
 
     uint16_t const P2P_DEFAULT_PORT = 12022;
     uint16_t const RPC_DEFAULT_PORT = 12023;
     boost::uuids::uuid const NETWORK_ID = { {
-			0x0b, 0xdf, 0x0d, 0x4a, 0x1b, 0x8a, 0x22, 0x02, 0x22, 0x20, 0x02, 0x22, 0x22, 0x02, 0x02, 0x22
+			0x25, 0xdf, 0x0d, 0x4a, 0x1b, 0x8a, 0x22, 0x02, 0x22, 0x20, 0x02, 0x22, 0x22, 0x02, 0x02, 0x22
       } }; // Bender's daydream
-    std::string const GENESIS_TX = "023c01ff0001808095f52a029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd08807121010353326f1f13a21e0b4c97eb6f34a4f70d2836692732bf97a3f2fe3faa5d637100";
-    uint32_t const GENESIS_NONCE =  7001;
+    std::string const GENESIS_TX = "023c01ff0001808095f52a029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101bfbc54d59fcb4b6e589aad918a4927d593ed2e34a41e81b40c755decf50f9dd900";
+    uint32_t const GENESIS_NONCE =  1000;
   }
 }

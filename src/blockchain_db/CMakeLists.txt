@@ -62,7 +62,7 @@ galluscoin_add_library(blockchain_db
 target_link_libraries(blockchain_db
   PUBLIC
     common
-    cncrypto
+    crypto
     ${LMDB_LIBRARY}
     ${BDB_LIBRARY}
     ${Boost_FILESYSTEM_LIBRARY}

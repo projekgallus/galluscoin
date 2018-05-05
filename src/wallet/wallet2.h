@@ -1,5 +1,5 @@
 // Copyright (c) 2018, Projek Gallus
-// Copyright (c) 2016-2017, SUMOKOIN, (forked from) The Monero Project
+// Copyright (c) 2017, SUMOKOIN
 // Copyright (c) 2014-2017, The Monero Project
 // 
 // All rights reserved.
@@ -63,6 +63,9 @@
 #include <iostream>
 #define WALLET_RCP_CONNECTION_TIMEOUT                          200000
 
+#define SUBADDRESS_LOOKAHEAD_MAJOR 50
+#define SUBADDRESS_LOOKAHEAD_MINOR 200
+
 namespace tools
 {
   class i_wallet2_callback
@@ -124,7 +127,7 @@ namespace tools
     //! Uses stdin and stdout. Returns a wallet2 and password for wallet with no file if no errors.
     static std::pair<std::unique_ptr<wallet2>, password_container> make_new(const boost::program_options::variables_map& vm);
 
-    wallet2(bool testnet = false, bool restricted = false) : m_run(true), m_callback(0), m_testnet(testnet), m_always_confirm_transfers(true), m_store_tx_info(true), m_default_mixin(0), m_default_priority(0), m_refresh_type(RefreshOptimizeCoinbase), m_auto_refresh(true), m_refresh_from_block_height(0), m_confirm_missing_payment_id(true), m_restricted(restricted), is_old_file_format(false) {}
+    wallet2(bool testnet = false, bool restricted = false) : m_run(true), m_callback(0), m_testnet(testnet), m_always_confirm_transfers(true), m_store_tx_info(true), m_default_mixin(0), m_default_priority(0), m_refresh_type(RefreshOptimizeCoinbase), m_auto_refresh(true), m_refresh_from_block_height(0), m_confirm_missing_payment_id(true), m_restricted(restricted), is_old_file_format(false), m_subaddress_lookahead_major(SUBADDRESS_LOOKAHEAD_MAJOR), m_subaddress_lookahead_minor(SUBADDRESS_LOOKAHEAD_MINOR) {}
 
     struct tx_scan_info_t
     {
@@ -398,7 +401,7 @@ namespace tools
     // free block size. TODO: fix this so that it actually takes
     // into account the current median block size rather than
     // the minimum block size.
-    void init(const std::string& daemon_address = "http://localhost:8080", uint64_t upper_transaction_size_limit = 0, bool enable_ssl=false,
+    void init(const std::string& daemon_address = "http://127.0.0.1:22023", uint64_t upper_transaction_size_limit = 0, bool enable_ssl=false,
               const char* cacerts_path=nullptr);
     bool deinit();
 
@@ -420,6 +423,15 @@ namespace tools
      * \brief Sets the seed language
      */
     void set_seed_language(const std::string &language);
+
+    /*!
+    * \brief Gets the cacerts path
+    */
+    const char* get_cacerts_path() const;
+    /*!
+    * \brief Sets the cacerts path
+    */
+    void set_cacerts_path(const std::string &cacerts_path);
 
     // Subaddress scheme
     cryptonote::account_public_address get_subaddress(const cryptonote::subaddress_index& index) const;
@@ -724,6 +736,7 @@ namespace tools
     i_wallet2_callback* m_callback;
     bool m_testnet;
     bool m_restricted;
+    std::string m_cacerts_path; /* Path to SSL CA Cerificates*/
     std::string seed_language; /*!< Language of the mnemonics (seed). */
     bool is_old_file_format; /*!< Whether the wallet file is of an old file format */
     bool m_watch_only; /*!< no spend key */
@@ -736,6 +749,8 @@ namespace tools
     uint64_t m_refresh_from_block_height;
     bool m_confirm_missing_payment_id;
     std::unordered_set<crypto::hash> m_scanned_pool_txs[2];
+
+    size_t m_subaddress_lookahead_major, m_subaddress_lookahead_minor;
   };
 }
 BOOST_CLASS_VERSION(tools::wallet2, 19)

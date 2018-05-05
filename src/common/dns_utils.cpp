@@ -365,7 +365,7 @@ namespace dns_utils
   *
   * gets the monero address from the TXT record of the DNS entry associated
   * with <url>.  If this lookup fails, or the TXT record does not contain an
-  * GALLUS address in the correct format, returns an empty string.  <dnssec_valid>
+  * GAC address in the correct format, returns an empty string.  <dnssec_valid>
   * will be set true or false according to whether or not the DNS query passes
   * DNSSEC validation.
   *

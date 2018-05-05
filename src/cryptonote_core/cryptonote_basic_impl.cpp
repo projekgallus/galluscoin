@@ -1,5 +1,5 @@
 // Copyright (c) 2018, Projek Gallus
-// Copyright (c) 2016-2017, SUMOKOIN, (forked from) The Monero Project
+// Copyright (c) 2017, SUMOKOIN
 // Copyright (c) 2014-2017, The Monero Project
 //
 // All rights reserved.
@@ -104,7 +104,7 @@ namespace cryptonote {
         base_reward = FINAL_SUBSIDY/2;
       }
     }
-    
+      
     // rounding (floor) base reward
     base_reward = base_reward / round_factor * round_factor;
 

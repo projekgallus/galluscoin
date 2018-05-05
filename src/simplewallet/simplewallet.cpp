@@ -1,5 +1,5 @@
 // Copyright (c) 2018, Projek Gallus
-// Copyright (c) 2016-2017, SUMOKOIN, (forked from) The Monero Project
+// Copyright (c) 2017, SUMOKOIN
 // Copyright (c) 2014-2017, The Monero Project
 //
 // All rights reserved.
@@ -1136,7 +1136,11 @@ bool simple_wallet::init(const boost::program_options::variables_map& vm)
     bool r = open_wallet(vm);
     CHECK_AND_ASSERT_MES(r, false, tr("failed to open account"));
   }
-  assert(m_wallet);
+  if (!m_wallet)
+  {
+    fail_msg_writer() << tr("wallet is null");
+    return false;
+  }
 
   // set --trusted-daemon if local
   try
@@ -1419,9 +1423,18 @@ bool simple_wallet::open_wallet(const boost::program_options::variables_map& vm)
   catch (const std::exception& e)
   {
     fail_msg_writer() << tr("failed to load wallet: ") << e.what();
-    // only suggest removing cache if the password was actually correct
-    if (m_wallet && m_wallet->verify_password(password))
-      fail_msg_writer() << boost::format(tr("You may want to remove the file \"%s\" and try again")) % m_wallet_file;
+    if (m_wallet)
+    {
+      // only suggest removing cache if the password was actually correct
+      bool password_is_correct = false;
+      try
+      {
+        password_is_correct = m_wallet->verify_password(password);
+      }
+      catch (...) {} // guard against I/O errors
+      if (password_is_correct)
+        fail_msg_writer() << boost::format(tr("You may want to remove the file \"%s\" and try again")) % m_wallet_file;
+    }
     return false;
   }
   success_msg_writer() <<
@@ -1590,7 +1603,7 @@ void simple_wallet::on_money_received(uint64_t height, const crypto::hash &txid,
   message_writer(epee::log_space::console_color_green, false) << "\r" <<
     tr("Height ") << height << ", " <<
     tr("txid ") << txid << ", " <<
-    print_money(amount) << tr(" GAC, ") <<
+    tr("received ") << print_money(amount) << ", " <<
     tr("idx ") << subaddr_index;
   if (m_auto_refresh_refreshing)
     m_cmd_binder.print_prompt();
@@ -1600,7 +1613,7 @@ void simple_wallet::on_money_received(uint64_t height, const crypto::hash &txid,
 //----------------------------------------------------------------------------------------------------
 void simple_wallet::on_money_spent(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& in_tx, uint64_t amount, const cryptonote::transaction& spend_tx, const cryptonote::subaddress_index& subaddr_index)
 {
-  message_writer(epee::log_space::console_color_green, false) << "\r" <<
+  message_writer(epee::log_space::console_color_magenta, false) << "\r" <<
     tr("Height ") << height << ", " <<
     tr("txid ") << txid << ", " <<
     tr("spent ") << print_money(amount) << ", " <<
@@ -4152,7 +4165,8 @@ int main(int argc, char* argv[])
   }
 
   cryptonote::simple_wallet w;
-  w.init(*vm);
+  if (!w.init(*vm))
+	  return 1;
 
   std::vector<std::string> command = command_line::get_arg(*vm, arg_command);
   if (!command.empty())

@@ -1,4 +1,5 @@
-:: Copyright (c) 2016-2017, GALLUSCOIN, (forked from) The Monero Project
+:: Copyright (c) 2018, Projek Gallus
+:: Copyright (c) 2016-2017, SUMOKOIN, (forked from) The Monero Project
 :: 
 :: All rights reserved.
 :: 

@@ -48,7 +48,7 @@ galluscoin_add_library(ringct
 target_link_libraries(ringct
   PUBLIC
     common
-    cncrypto
+    crypto
   PRIVATE
 ${EXTRA_LIBRARIES})
 
