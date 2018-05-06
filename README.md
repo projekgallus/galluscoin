@@ -14,6 +14,18 @@ As with many development projects, the repository on Github is considered to be 
 
 **Anyone is welcome to contribute to Galluscoin's codebase!** If you have a fix or code change, feel free to submit is as a pull request directly to the "master" branch. In cases where the change is relatively small or does not affect other parts of the codebase it may be merged in immediately by any one of the collaborators. On the other hand, if the change is particularly large or complex, it is expected that it will be discussed at length either well in advance of the pull request being submitted, or even directly on the pull request.
 
+## Coin Supply & Emission
+
+- **Total supply**: **32,000,000** coins in first 20 years which is followed by a tail emission each year for inflation. About 6.25% (~2 million) was premined to reserve for future development. 30 million coins available for community mining.
+- **Coin symbol**: **GAC**
+- **Coin Units**:
+  + 1 Nano-Gallus &nbsp;= 0.000000001 **GAC** (10<sup>-9</sup> - _the smallest coin unit_)
+  + 1 Micro-Gallus = 0.000001 **GAC** (10<sup>-6</sup>)
+  + 1 Milli-Gallus = 0.001 **GAC** (10<sup>-3</sup>)
+- **Hash algorithm**: CryptoNight Heavy (Proof-Of-Work)
+- **Emission scheme**: Galluscoin's block reward changes _every 6-months_ as the following "Camel" distribution* (inspired by _real-world mining production_ like of crude oil, coal etc. that is often slow at first,
+accelerated in the next few years before declined and depleted).
+
 ## License
 
 Please view [LICENSE](LICENSE)
