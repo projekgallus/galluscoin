@@ -1699,8 +1699,13 @@ uint64_t BlockchainLMDB::height() const
 {
   LOG_PRINT_L3("BlockchainLMDB::" << __func__);
   check_open();
+  TXN_PREFIX_RDONLY();
+  int result;
 
-  return m_height;
+  MDB_stat db_stats;
+  if ((result = mdb_stat(m_txn, m_blocks, &db_stats)))
+    throw0(DB_ERROR(lmdb_error("Failed to query m_blocks: ", result).c_str()));
+  return db_stats.ms_entries;
 }
 
 bool BlockchainLMDB::tx_exists(const crypto::hash& h) const
