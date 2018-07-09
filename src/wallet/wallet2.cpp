@@ -750,6 +750,7 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
 
   // Don't try to extract tx public key if tx has no ouputs
   size_t pk_index = 0;
+  std::unordered_set<crypto::public_key> public_keys_seen;
   std::vector<tx_scan_info_t> tx_scan_info(tx.vout.size());
   while (!tx.vout.empty())
   {
@@ -766,6 +767,13 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
       return;
     }
 
+    if (public_keys_seen.find(pub_key_field.pub_key) != public_keys_seen.end())
+    {
+      LOG_PRINT_L0("The same transaction pubkey is present more than once, ignoring extra instance");
+      continue;
+    }
+    public_keys_seen.insert(pub_key_field.pub_key);
+	
     int num_vouts_received = 0;
     tx_pub_key = pub_key_field.pub_key;
     bool r = true;
@@ -5115,7 +5123,6 @@ crypto::public_key wallet2::get_tx_pub_key_from_received_outs(const tools::walle
   // more than one, loop and search
   const cryptonote::account_keys& keys = m_account.get_keys();
   size_t pk_index = 0;
-
   const std::vector<crypto::public_key> additional_tx_pub_keys = get_additional_tx_pub_keys_from_extra(td.m_tx);
   std::vector<crypto::key_derivation> additional_derivations;
   for (size_t i = 0; i < additional_tx_pub_keys.size(); ++i)
